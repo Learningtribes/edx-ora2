@@ -378,7 +378,7 @@ function oaTinyMCE(options) {
         /*theme: "modern",
         skin: 'studio-tmce4',*/
 
-        base_url: this.base_asset_url + '/js/vendor/tinymce/js/tinymce',
+        base_url: '/static/studio/js/vendor/tinymce/js/tinymce',
         suffix: '.min',
         theme: "silver",
         skin: 'oxide',
