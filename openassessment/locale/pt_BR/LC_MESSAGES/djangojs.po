@@ -265,8 +265,8 @@ msgstr "Você está prestes a enviar sua resposta para este trabalho. Depois que
 
 #: openassessment/xblock/static/js/openassessment-lms.min.js:1
 #: openassessment/xblock/static/js/src/lms/oa_response.js:574
-msgid "File size must be 10MB or less."
-msgstr ""
+msgid "File size must be 50MB or less."
+msgstr "O tamanho do arquivo deve ter 50MB ou menos."
 
 #: openassessment/xblock/static/js/openassessment-lms.min.js:1
 #: openassessment/xblock/static/js/src/lms/oa_response.js:581

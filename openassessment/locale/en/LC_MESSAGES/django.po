@@ -1090,7 +1090,7 @@ msgid "Your Submission Status"
 msgstr ""
 
 #: openassessment/templates/openassessmentblock/response/oa_response.html:142
-msgid "We could not upload files"
+msgid "We could not upload files."
 msgstr ""
 
 #: openassessment/templates/openassessmentblock/response/oa_response.html:146

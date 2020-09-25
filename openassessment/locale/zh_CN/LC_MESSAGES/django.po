@@ -1095,8 +1095,8 @@ msgid "Your Submission Status"
 msgstr "你的提交状态"
 
 #: openassessment/templates/openassessmentblock/response/oa_response.html:142
-msgid "We could not upload files"
-msgstr ""
+msgid "We could not upload files."
+msgstr "我们无法上传文件。"
 
 #: openassessment/templates/openassessmentblock/response/oa_response.html:146
 msgid "Select a file to upload for this submission."

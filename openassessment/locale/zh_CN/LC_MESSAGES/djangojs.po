@@ -264,8 +264,8 @@ msgstr "你将会提交对本次作业的答案。提交后，你将无法修改
 
 #: openassessment/xblock/static/js/openassessment-lms.min.js:1
 #: openassessment/xblock/static/js/src/lms/oa_response.js:574
-msgid "File size must be 10MB or less."
-msgstr ""
+msgid "File size must be 50MB or less."
+msgstr "文件大小必须小于等于 50MB。"
 
 #: openassessment/xblock/static/js/openassessment-lms.min.js:1
 #: openassessment/xblock/static/js/src/lms/oa_response.js:581
