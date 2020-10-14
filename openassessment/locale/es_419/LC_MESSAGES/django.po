@@ -1091,8 +1091,8 @@ msgid "Your Submission Status"
 msgstr "El estado de su entrega"
 
 #: openassessment/templates/openassessmentblock/response/oa_response.html:142
-msgid "We could not upload files"
-msgstr "No pudimos subir archivos"
+msgid "We could not upload files."
+msgstr "No pudimos subir archivos."
 
 #: openassessment/templates/openassessmentblock/response/oa_response.html:146
 msgid "Select a file to upload for this submission."
