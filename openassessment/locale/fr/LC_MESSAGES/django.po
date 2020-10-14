@@ -1098,7 +1098,7 @@ msgstr "Statut de votre envoi"
 
 #: openassessment/templates/openassessmentblock/response/oa_response.html:142
 msgid "We could not upload files."
-msgstr "Nous n'avons pas pu télécharger le fichiers."
+msgstr "Nous n'avons pas pu télécharger les fichiers."
 
 #: openassessment/templates/openassessmentblock/response/oa_response.html:146
 msgid "Select a file to upload for this submission."
