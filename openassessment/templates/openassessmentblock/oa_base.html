@@ -4,7 +4,16 @@
     <div class="openassessment problem">
         <div class="wrapper--grid">
             {% if title %}
-                <h3 class="openassessment__title problem__header">{% trans title %}</h3>
+                <div class="block-header-wrapper problem-header-wrapper">
+                    <h3 class="openassessment__title problem__header hd hd-3 block-header problem-header">
+                      {% trans title %}
+                    </h3>
+                </div>
+                <div class="block-label problem-label openassessment-label">
+                    <span class="fal fa-clipboard-list block-label-icon"></span>
+                    <span class="block-label-text">{% trans 'Free T' %}</span>
+                </div>
+                <hr class="sep-line openassessment-sep-line">
             {% endif %}
 
             <div class="wrapper-openassessment__message">
