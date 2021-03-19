@@ -44,6 +44,7 @@
                         <label for="openassessment_title_editor" class="setting-label">{% trans "Display Name "%}</label>
                         <input type="text" id="openassessment_title_editor" class="input setting-input" value="{{ title }}">
                     </div>
+                    <span class="question-mark-wrapper" data-title='{% trans "The display name for this component." %}'></span>
                     <p class="setting-help">{% trans "The display name for this component." %}</p>
                 </li>
                 <li class="openassessment_date_editor field comp-setting-entry">
@@ -73,6 +74,7 @@
                             value="{{ submission_start|utc|date:"H:i" }}"
                         >
                     </div>
+                    <span class="question-mark-wrapper" data-title='{% trans "The date and time when learners can begin submitting responses." %}'></span>
                     <p class="setting-help">{% trans "The date and time when learners can begin submitting responses." %}</p>
                 </li>
                 <li class="openassessment_date_editor field comp-setting-entry">
@@ -102,6 +104,7 @@
                             value="{{ submission_due|utc|date:"H:i" }}"
                         >
                     </div>
+                    <span class="question-mark-wrapper" data-title='{% trans "The date and time when learners can no longer submit responses." %}'></span>
                     <p class="setting-help">{% trans "The date and time when learners can no longer submit responses." %}</p>
                 </li>
                 <li id="openassessment_submission_text_response_wrapper" class="field comp-setting-entry">
@@ -113,6 +116,7 @@
                             {% endfor %}
                         </select>
                     </div>
+                    <span class="question-mark-wrapper" data-title='{% trans "Specify whether learners must include a text based response to this problem's prompt." %}'></span>
                     <p class="setting-help">
                         {% trans "Specify whether learners must include a text based response to this problem's prompt." %}
                     </p>
@@ -126,6 +130,7 @@
                             {% endfor %}
                         </select>
                     </div>
+                    <span class="question-mark-wrapper" data-title='{% trans "Specify whether learners are able to upload files as a part of their response." %}'></span>
                     <p class="setting-help">
                         {% trans "Specify whether learners are able to upload files as a part of their response." %}
                     </p>
@@ -138,6 +143,7 @@
                                 <option value="custom" {% if file_upload_type == "custom" %} selected="true" {% endif %}>{% trans "Custom File Types"%}</option>
                             </select>
                         </div>
+                        <span class="question-mark-wrapper" data-title='{% trans "Specify whether learners can submit files along with their text responses. Select Images to allow JPG, GIF, or PNG files. Select PDF or Images to allow PDF files and images. Select Custom File Types to allow files with extensions that you specify below. (Use the Select Custom File Types option with caution.)" %}'></span>
                         <p class="setting-help">
                             {% trans "Specify whether learners can submit files along with their text responses. Select Images to allow JPG, GIF, or PNG files. Select PDF or Images to allow PDF files and images. Select Custom File Types to allow files with extensions that you specify below. (Use the Select Custom File Types option with caution.)" %}
                         </p>
@@ -150,6 +156,7 @@
                                        value="{{ white_listed_file_types }}"
                                         />
                             </div>
+                            <span class="question-mark-wrapper" data-title='{% trans "Enter the file extensions, separated by commas, that you want learners to be able to upload. For example: pdf,doc,docx." %}'></span>
                             <p class="setting-help">
                                 {% trans "Enter the file extensions, separated by commas, that you want learners to be able to upload. For example: pdf,doc,docx." %}
                             </p>&nbsp;
@@ -165,6 +172,7 @@
                             <option value="1" {% if allow_latex %} selected="true" {% endif %}>{% trans "True"%}</option>
                         </select>
                     </div>
+                    <span class="question-mark-wrapper" data-title='{% trans "Specify whether learners can write LaTeX formatted strings"%}'></span>
                     <p class="setting-help">{% trans "Specify whether learners can write LaTeX formatted strings"%}</p>
                 </li>
                 <li id="openassessment_leaderboard_wrapper" class="field comp-setting-entry">
@@ -178,6 +186,7 @@
                             min="0" max="99"
                         />
                     </div>
+                    <span class="question-mark-wrapper" data-title='{% trans "Specify the number of top scoring responses to display. Valid numbers are 0 to 99. If the number is 0, the Top Responses section does not appear to learners." %}'></span>
                     <p class="setting-help">{% trans "Specify the number of top scoring responses to display. Valid numbers are 0 to 99. If the number is 0, the Top Responses section does not appear to learners." %}</p>
                 </li>
                 <li>
