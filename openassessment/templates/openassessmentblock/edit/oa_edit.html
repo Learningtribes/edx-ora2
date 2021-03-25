@@ -32,6 +32,7 @@
             </a>
         </div>
 
+        <div class="oa_editor_content_outer_wrapper">
         {% include "openassessmentblock/edit/oa_edit_prompts.html"  %}
 
         {% include "openassessmentblock/edit/oa_edit_rubric.html"  %}
@@ -203,17 +204,17 @@
                 {% endfor %}
             </ol>
         </div>
+        </div>
     </div>
 
     <div class="openassessment_editor_buttons xblock-actions">
         <h3 class="sr">Actions</h3>
         <ul>
             <li class="action-item">
-                <a href="#" class="button action-primary openassessment_save_button">{% trans "Save" %}</a>
-            </li>
-
-            <li class="action-item">
                 <a href="#" class="button openassessment_cancel_button">{% trans "Cancel" %}</a>
+            </li>
+            <li class="action-item">
+                <a href="#" class="button action-primary openassessment_save_button">{% trans "Save" %}</a>
             </li>
         </ul>
     </div>
