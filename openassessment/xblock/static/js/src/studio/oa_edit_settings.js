@@ -81,6 +81,15 @@ OpenAssessment.EditSettingsView = function(element, assessmentViews, data) {
     );
 
     this.initializeSortableAssessments();
+
+    if (LearningTribes && LearningTribes.QuestionMark) {
+        $wrappers = $('#oa_settings_editor_wrapper .question-mark-wrapper')
+        $wrappers.each(function(i, wrapper){
+            new LearningTribes.QuestionMark(wrapper)
+        })
+    }
+    //console.log('sss')
+
 };
 
 OpenAssessment.EditSettingsView.prototype = {
