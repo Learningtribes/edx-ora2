@@ -127,7 +127,7 @@ OpenAssessment.StudioView.prototype = {
      Save the problem's XML definition to the server.
      If the problem has been released, make the user confirm the save.
      **/
-    save: function() {
+    save: function(e) {
         var view = this;
         this.saveTabState();
 
@@ -166,6 +166,9 @@ OpenAssessment.StudioView.prototype = {
                 view.showError(errMsg);
             });
         }
+        e.stopPropagation();
+        e.preventDefault();
+        return false;
     },
 
     /**
@@ -223,10 +226,13 @@ OpenAssessment.StudioView.prototype = {
     /**
      Cancel editing.
      **/
-    cancel: function() {
+    cancel: function(e) {
         // Notify the client-side runtime so it will close the editing modal
         this.saveTabState();
         this.runtime.notify('cancel', {});
+        e.stopPropagation();
+        e.preventDefault();
+        return false;
     },
 
     /**
