@@ -88,17 +88,6 @@ OpenAssessment.EditSettingsView = function(element, assessmentViews, data) {
             new LearningTribes.QuestionMark(wrapper)
         })
     }
-    if (LearningTribes && LearningTribes.Switcher) {
-        var $boxes = $('#oa_settings_editor_wrapper input[type=checkbox]')
-        $boxes.each(function(i, checkbox){
-            var $checkbox = $(checkbox)
-            var $switcher = $checkbox.next('span.switcher-wrapper');
-            new LearningTribes.Switcher($switcher[0], $checkbox.is(':checked').toString(),
-                function(checked){
-                $checkbox.attr('checked', checked)
-            })
-        })
-    }
 
 };
 
