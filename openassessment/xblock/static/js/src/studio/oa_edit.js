@@ -72,8 +72,6 @@ OpenAssessment.StudioView = function(runtime, element, server, data) {
     $(".openassessment_save_button", this.element).click($.proxy(this.save, this));
     $(".openassessment_cancel_button", this.element).click($.proxy(this.cancel, this));
 
-    $(".openassessment_save_button", this.element).click(this.stopPropagation);
-    $(".openassessment_cancel_button", this.element).click(this.stopPropagation);
 };
 
 OpenAssessment.StudioView.prototype = {
@@ -136,7 +134,7 @@ OpenAssessment.StudioView.prototype = {
      If the problem has been released, make the user confirm the save.
      **/
     save: function() {
-
+        this.stopPropagation();
         var view = this;
         this.saveTabState();
 
@@ -233,8 +231,7 @@ OpenAssessment.StudioView.prototype = {
      Cancel editing.
      **/
     cancel: function(e) {
-        e.stopPropagation();
-        e.preventDefault();
+        this.stopPropagation();
         // Notify the client-side runtime so it will close the editing modal
         this.saveTabState();
         this.runtime.notify('cancel', {});
