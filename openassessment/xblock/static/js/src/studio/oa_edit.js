@@ -71,6 +71,9 @@ OpenAssessment.StudioView = function(runtime, element, server, data) {
     // Install the save and cancel buttons
     $(".openassessment_save_button", this.element).click($.proxy(this.save, this));
     $(".openassessment_cancel_button", this.element).click($.proxy(this.cancel, this));
+
+    $(".openassessment_save_button", this.element).click(this.stopPropagation);
+    $(".openassessment_cancel_button", this.element).click(this.stopPropagation);
 };
 
 OpenAssessment.StudioView.prototype = {
@@ -123,13 +126,17 @@ OpenAssessment.StudioView.prototype = {
         OpenAssessment.lastOpenEditingTab = tabElement.tabs('option', 'active');
     },
 
+    stopPropagation: function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        return false;
+    },
     /**
      Save the problem's XML definition to the server.
      If the problem has been released, make the user confirm the save.
      **/
-    save: function(e) {
-        e.stopPropagation();
-        e.preventDefault();
+    save: function() {
+
         var view = this;
         this.saveTabState();
 
@@ -168,7 +175,6 @@ OpenAssessment.StudioView.prototype = {
                 view.showError(errMsg);
             });
         }
-        return false;
     },
 
     /**
