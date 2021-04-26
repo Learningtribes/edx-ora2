@@ -204,7 +204,7 @@ describe("OpenAssessment.StudioView", function() {
 
     it("displays the correct tab on initialization", function() {
         $(".oa_editor_tab", view.element).each(function(){
-            if ($(this).attr('aria-controls') == "oa_prompt_editor_wrapper"){
+            if ($(this).attr('aria-controls') == "oa_prompts_editor_wrapper"){
                 expect($(this).hasClass('ui-state-active')).toBe(true);
             } else {
                 expect($(this).hasClass('ui-state-active')).toBe(false);
