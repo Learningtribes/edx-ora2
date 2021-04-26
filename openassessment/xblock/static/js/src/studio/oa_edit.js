@@ -134,7 +134,6 @@ OpenAssessment.StudioView.prototype = {
      If the problem has been released, make the user confirm the save.
      **/
     save: function() {
-        this.stopPropagation();
         var view = this;
         this.saveTabState();
 
@@ -173,6 +172,8 @@ OpenAssessment.StudioView.prototype = {
                 view.showError(errMsg);
             });
         }
+        this.stopPropagation();
+        return false;
     },
 
     /**
@@ -231,10 +232,10 @@ OpenAssessment.StudioView.prototype = {
      Cancel editing.
      **/
     cancel: function(e) {
-        this.stopPropagation();
         // Notify the client-side runtime so it will close the editing modal
         this.saveTabState();
         this.runtime.notify('cancel', {});
+        this.stopPropagation();
         return false;
     },
 
