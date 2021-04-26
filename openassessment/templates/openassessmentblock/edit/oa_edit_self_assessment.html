@@ -6,7 +6,8 @@
     <div class="openassessment_inclusion_wrapper">
         <input id="include_self_assessment" type="checkbox"
                 {% if assessments.self_assessment %} checked="true" {% endif %}>
-        <label for="include_self_assessment">{% trans "Step: Self Assessment" %}</label>
+        <span class="switcher-wrapper"></span>
+        <label>{% trans "Step: Self Assessment" %}</label>
     </div>
     <div class="openassessment_assessment_module_editor">
         <p id="self_assessment_description_closed" class="openassessment_description_closed {% if assessments.self_assessment %} is--hidden {% endif %}">

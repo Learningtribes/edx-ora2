@@ -6,7 +6,8 @@
     <div class="openassessment_inclusion_wrapper">
         <input type="checkbox" id="include_peer_assessment"
                 {% if assessments.peer_assessment %} checked="true" {% endif %}>
-        <label for="include_peer_assessment">{% trans "Step: Peer Assessment" %}</label>
+        <span class="switcher-wrapper"></span>
+        <label>{% trans "Step: Peer Assessment" %}</label>
     </div>
     <div class="openassessment_assessment_module_editor">
         <p id="peer_assessment_description_closed" class="openassessment_description_closed {% if assessments.peer_assessment %} is--hidden {% endif %}">

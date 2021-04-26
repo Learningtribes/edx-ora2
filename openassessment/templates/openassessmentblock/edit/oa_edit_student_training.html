@@ -6,7 +6,8 @@
     <div class="openassessment_inclusion_wrapper">
         <input type="checkbox" id="include_student_training"
                 {% if assessments.student_training %} checked="true" {% endif %}>
-        <label for="include_student_training">{% trans "Step: Learner Training" %}</label>
+        <span class="switcher-wrapper"></span>
+        <label>{% trans "Step: Learner Training" %}</label>
     </div>
 
     <div class="openassessment_assessment_module_editor">
