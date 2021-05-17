@@ -71,6 +71,7 @@ OpenAssessment.StudioView = function(runtime, element, server, data) {
     // Install the save and cancel buttons
     $(".openassessment_save_button", this.element).click($.proxy(this.save, this));
     $(".openassessment_cancel_button", this.element).click($.proxy(this.cancel, this));
+
 };
 
 OpenAssessment.StudioView.prototype = {
@@ -123,6 +124,11 @@ OpenAssessment.StudioView.prototype = {
         OpenAssessment.lastOpenEditingTab = tabElement.tabs('option', 'active');
     },
 
+    stopPropagation: function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        return false;
+    },
     /**
      Save the problem's XML definition to the server.
      If the problem has been released, make the user confirm the save.
@@ -166,6 +172,8 @@ OpenAssessment.StudioView.prototype = {
                 view.showError(errMsg);
             });
         }
+        this.stopPropagation();
+        return false;
     },
 
     /**
@@ -223,10 +231,12 @@ OpenAssessment.StudioView.prototype = {
     /**
      Cancel editing.
      **/
-    cancel: function() {
+    cancel: function(e) {
         // Notify the client-side runtime so it will close the editing modal
         this.saveTabState();
         this.runtime.notify('cancel', {});
+        this.stopPropagation();
+        return false;
     },
 
     /**

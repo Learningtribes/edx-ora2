@@ -10,10 +10,13 @@
 
         <div id="openassessment_editor_header">
             <h6 id="oa_editor_window_title" class="title modal_window_title" >{% trans "Open Response Assessment" %}</h6>
-            <ul class="editor_modes action_list action_modes editor_tabs">
-                <li class="view-button oa_editor_tab"><a href="#oa_settings_editor_wrapper">{% trans "Settings" %}</a></li>
-                <li class="view-button oa_editor_tab"><a href="#oa_rubric_editor_wrapper">{% trans "Rubric" %}</a></li>
-                <li class="view-button oa_editor_tab"><a href="#oa_prompt_editor_wrapper">{% trans "Prompt" %}</a></li>
+        </div>
+
+        <div class="modal-tabs">
+            <ul class="editor_modes action_list action_modes editor_tabs settings-tabs-header">
+                <li class="view-button oa_editor_tab settings-tab-buttons"><a class="settings-tab-button" href="#oa_settings_editor_wrapper">{% trans "Settings" %}</a></li>
+                <li class="view-button oa_editor_tab settings-tab-buttons"><a class="settings-tab-button" href="#oa_rubric_editor_wrapper">{% trans "Rubric" %}</a></li>
+                <li class="view-button oa_editor_tab settings-tab-buttons"><a class="settings-tab-button" href="#oa_prompts_editor_wrapper">{% trans "Prompt" %}</a></li>
             </ul>
         </div>
 
@@ -29,6 +32,7 @@
             </a>
         </div>
 
+        <div class="oa_editor_content_outer_wrapper">
         {% include "openassessmentblock/edit/oa_edit_prompts.html"  %}
 
         {% include "openassessmentblock/edit/oa_edit_rubric.html"  %}
@@ -40,6 +44,7 @@
                     <div class="wrapper-comp-setting">
                         <label for="openassessment_title_editor" class="setting-label">{% trans "Display Name "%}</label>
                         <input type="text" id="openassessment_title_editor" class="input setting-input" value="{{ title }}">
+                        <span class="question-mark-wrapper" data-title='{% trans "The display name for this component." %}'></span>
                     </div>
                     <p class="setting-help">{% trans "The display name for this component." %}</p>
                 </li>
@@ -69,6 +74,7 @@
                             id="openassessment_submission_start_time"
                             value="{{ submission_start|utc|date:"H:i" }}"
                         >
+                        <span class="question-mark-wrapper" data-title='{% trans "The date and time when learners can begin submitting responses." %}'></span>
                     </div>
                     <p class="setting-help">{% trans "The date and time when learners can begin submitting responses." %}</p>
                 </li>
@@ -98,6 +104,7 @@
                             id="openassessment_submission_due_time"
                             value="{{ submission_due|utc|date:"H:i" }}"
                         >
+                        <span class="question-mark-wrapper" data-title='{% trans "The date and time when learners can no longer submit responses." %}'></span>
                     </div>
                     <p class="setting-help">{% trans "The date and time when learners can no longer submit responses." %}</p>
                 </li>
@@ -109,6 +116,7 @@
                             <option value="{{ option_key }}" {% if option_key == text_response %} selected="true" {% endif %}>{{ option_name }}</option>
                             {% endfor %}
                         </select>
+                        <span class="question-mark-wrapper" data-title='{% trans "Specify whether learners must include a text based response to this problem's prompt." %}'></span>
                     </div>
                     <p class="setting-help">
                         {% trans "Specify whether learners must include a text based response to this problem's prompt." %}
@@ -122,6 +130,7 @@
                             <option value="{{ option_key }}" {% if option_key == file_upload_response %} selected="true" {% endif %}>{{ option_name }}</option>
                             {% endfor %}
                         </select>
+                        <span class="question-mark-wrapper" data-title='{% trans "Specify whether learners are able to upload files as a part of their response." %}'></span>
                     </div>
                     <p class="setting-help">
                         {% trans "Specify whether learners are able to upload files as a part of their response." %}
@@ -134,6 +143,7 @@
                                 <option value="image" {% if file_upload_type == "image" %} selected="true" {% endif %}>{% trans "Image Files"%}</option>
                                 <option value="custom" {% if file_upload_type == "custom" %} selected="true" {% endif %}>{% trans "Custom File Types"%}</option>
                             </select>
+                            <span class="question-mark-wrapper" data-title='{% trans "Specify whether learners can submit files along with their text responses. Select Images to allow JPG, GIF, or PNG files. Select PDF or Images to allow PDF files and images. Select Custom File Types to allow files with extensions that you specify below. (Use the Select Custom File Types option with caution.)" %}'></span>
                         </div>
                         <p class="setting-help">
                             {% trans "Specify whether learners can submit files along with their text responses. Select Images to allow JPG, GIF, or PNG files. Select PDF or Images to allow PDF files and images. Select Custom File Types to allow files with extensions that you specify below. (Use the Select Custom File Types option with caution.)" %}
@@ -146,6 +156,7 @@
                                        type="text"
                                        value="{{ white_listed_file_types }}"
                                         />
+                                <span class="question-mark-wrapper" data-title='{% trans "Enter the file extensions, separated by commas, that you want learners to be able to upload. For example: pdf,doc,docx." %}'></span>
                             </div>
                             <p class="setting-help">
                                 {% trans "Enter the file extensions, separated by commas, that you want learners to be able to upload. For example: pdf,doc,docx." %}
@@ -161,6 +172,8 @@
                             <option value="0">{% trans "False"%}</option>
                             <option value="1" {% if allow_latex %} selected="true" {% endif %}>{% trans "True"%}</option>
                         </select>
+                        <span class="switcher-wrapper"></span>
+                        <span class="question-mark-wrapper" data-title='{% trans "Specify whether learners can write LaTeX formatted strings"%}'></span>
                     </div>
                     <p class="setting-help">{% trans "Specify whether learners can write LaTeX formatted strings"%}</p>
                 </li>
@@ -174,6 +187,7 @@
                             value="{{ leaderboard_show }}"
                             min="0" max="99"
                         />
+                        <span class="question-mark-wrapper" data-title='{% trans "Specify the number of top scoring responses to display. Valid numbers are 0 to 99. If the number is 0, the Top Responses section does not appear to learners." %}'></span>
                     </div>
                     <p class="setting-help">{% trans "Specify the number of top scoring responses to display. Valid numbers are 0 to 99. If the number is 0, the Top Responses section does not appear to learners." %}</p>
                 </li>
@@ -191,17 +205,17 @@
                 {% endfor %}
             </ol>
         </div>
+        </div>
     </div>
 
     <div class="openassessment_editor_buttons xblock-actions">
         <h3 class="sr">Actions</h3>
         <ul>
             <li class="action-item">
-                <a href="#" class="button action-primary openassessment_save_button">{% trans "Save" %}</a>
-            </li>
-
-            <li class="action-item">
                 <a href="#" class="button openassessment_cancel_button">{% trans "Cancel" %}</a>
+            </li>
+            <li class="action-item">
+                <a href="#" class="button action-primary openassessment_save_button">{% trans "Save" %}</a>
             </li>
         </ul>
     </div>

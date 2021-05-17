@@ -81,6 +81,39 @@ OpenAssessment.EditSettingsView = function(element, assessmentViews, data) {
     );
 
     this.initializeSortableAssessments();
+
+    if (LearningTribes) {
+        if (LearningTribes.QuestionMark) {
+            var $wrappers = $('#oa_settings_editor_wrapper .question-mark-wrapper')
+            $wrappers.each(function(i, wrapper){
+                new LearningTribes.QuestionMark(wrapper)
+            })
+        }
+        var Switcher = LearningTribes.Switcher;
+        if (Switcher) {
+            var $sel = $('#openassessment_submission_latex_editor', this.settingsElement);
+            var $switcher = $sel.next();
+            new Switcher($switcher[0], $sel.val() === '1' ? true : false,
+                function(checked){
+                $sel.val(checked ? 1 : 0);
+            });
+
+            var $boxes = $('#oa_settings_editor_wrapper input[type=checkbox]')
+            setTimeout(function() {
+                $boxes.each(function(i, checkbox){
+                    var $checkbox = $(checkbox)
+                    var $switcher = $checkbox.next('span.switcher-wrapper');
+                    $switcher.length && new Switcher($switcher[0], $checkbox.is(':checked').toString(),
+                        function(){
+                        $checkbox.click();
+                    })
+                })
+            },1000)
+
+        }
+
+    }
+
 };
 
 OpenAssessment.EditSettingsView.prototype = {

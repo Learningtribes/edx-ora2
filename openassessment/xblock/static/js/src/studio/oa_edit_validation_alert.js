@@ -43,9 +43,9 @@ OpenAssessment.ValidationAlert.prototype = {
         var headerHeight = $('#openassessment_editor_header', this.editorElement).outerHeight();
         this.element.addClass('covered');
         var styles = {
-            'height': 'Calc(100% - ' + headerHeight + 'px)',
+            /*'height': 'Calc(100% - ' + headerHeight + 'px)',
             'border-top-right-radius': '3px',
-            'border-top-left-radius': '3px'
+            'border-top-left-radius': '3px'*/
         };
 
         $('.oa_editor_content_wrapper', this.editorElement).each(function() {
@@ -79,9 +79,9 @@ OpenAssessment.ValidationAlert.prototype = {
             var headerHeight = $('#openassessment_editor_header', this.editorElement).outerHeight();
             var heightString = 'Calc(100% - ' + (alertHeight + headerHeight) + 'px)';
             var styles = {
-                'height': heightString,
+                /*'height': heightString,
                 'border-top-right-radius': '0px',
-                'border-top-left-radius': '0px'
+                'border-top-left-radius': '0px'*/
             };
 
             $('.oa_editor_content_wrapper', this.editorElement).each(function() {
