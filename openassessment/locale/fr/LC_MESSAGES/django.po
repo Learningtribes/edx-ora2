@@ -79,7 +79,7 @@ msgstr "Il manque une option pour \"{criterion_name}\" dans l'exemple {example_n
 
 #: openassessment/templates/openassessmentblock/edit/oa_edit.html:12
 msgid "Open Response Assessment"
-msgstr "Évaluation d'une réponse libre"
+msgstr "Réponse libre"
 
 #: openassessment/templates/openassessmentblock/edit/oa_edit.html:14
 msgid "Settings"
