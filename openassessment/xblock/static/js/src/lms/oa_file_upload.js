@@ -36,7 +36,6 @@ OpenAssessment.FileUploader = function() {
                             }
                         );
 
-                        // Return control to the caller
                         resolve();
                     }
                 ).fail(
@@ -44,7 +43,6 @@ OpenAssessment.FileUploader = function() {
                         reject([textStatus]);
                     }
                 );
-            }
-        ).promise();
+        })
     };
 };
