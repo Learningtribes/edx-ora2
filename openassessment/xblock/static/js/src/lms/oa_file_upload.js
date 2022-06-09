@@ -16,13 +16,12 @@ Returns:
 */
 OpenAssessment.FileUploader = function() {
     this.upload = function(url, file) {
-        return $.Deferred(
-            function(defer) {
+        return new Promise(function (resolve, reject) {
                 $.ajax({
                     url: url,
                     type: 'PUT',
                     data: file,
-                    async: false,
+                    async: true,
                     processData: false,
                     contentType: file.type
                 }).done(
@@ -38,11 +37,11 @@ OpenAssessment.FileUploader = function() {
                         );
 
                         // Return control to the caller
-                        defer.resolve();
+                        resolve();
                     }
                 ).fail(
                     function(data, textStatus) {
-                        defer.rejectWith(this, [textStatus]);
+                        reject([textStatus]);
                     }
                 );
             }
