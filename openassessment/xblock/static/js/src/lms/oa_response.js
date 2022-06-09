@@ -800,7 +800,7 @@ OpenAssessment.ResponseView.prototype = {
         return view.server.getUploadUrl(filetype, filename, filenum).done(
             function(url) {
                 view.fileUploader.upload(url, file)
-                    .done(function() {
+                    .then(function() {
                         view.fileUrl(filenum);
                         view.baseView.toggleActionError('upload', null);
                         if (finalUpload) {
@@ -809,7 +809,7 @@ OpenAssessment.ResponseView.prototype = {
                             view.checkSubmissionAbility(true);
                         }
                     })
-                    .fail(handleError);
+                    .catch(handleError);
             }
         ).fail(handleError);
     },
