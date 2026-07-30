@@ -46,6 +46,13 @@ ITEM_2 = {
 @ddt.ddt
 class TestAssessmentWorkflowApi(CacheResetTest):
 
+    def test_status_values_include_all_steps(self):
+        self.assertIsInstance(AssessmentWorkflow.STEPS, list)
+        self.assertEqual(
+            AssessmentWorkflow.STATUS_VALUES,
+            AssessmentWorkflow.STEPS + AssessmentWorkflow.STATUSES
+        )
+
     @ddt.file_data('data/assessments.json')
     def test_create_workflow(self, data):
         first_step = data["steps"][0] if data["steps"] else "peer"
