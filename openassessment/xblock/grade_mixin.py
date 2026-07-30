@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
 """
 Grade step in the OpenAssessment XBlock.
 """
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import copy
 
 from lazy import lazy
@@ -8,8 +11,9 @@ from xblock.core import XBlock
 
 from django.utils.translation import ugettext as _
 
-from data_conversion import create_submission_dict
 from openassessment.assessment.errors import PeerAssessmentError, SelfAssessmentError
+
+from .data_conversion import create_submission_dict
 
 
 class GradeMixin(object):
