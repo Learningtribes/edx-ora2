@@ -19,6 +19,7 @@ import json
 import logging
 import math
 
+import six
 from lazy import lazy
 
 from django.core.cache import cache
@@ -105,7 +106,7 @@ class Rubric(models.Model):
         rubric_dict.pop("content_hash", None)
 
         canonical_form = json.dumps(rubric_dict, sort_keys=True)
-        return sha1(canonical_form).hexdigest()
+        return sha1(canonical_form.encode('utf-8')).hexdigest()
 
     @staticmethod
     def structure_hash_from_dict(rubric_dict):
@@ -137,7 +138,7 @@ class Rubric(models.Model):
             for criterion in rubric_dict.get('criteria', [])
         ]
         canonical_form = json.dumps(structure, sort_keys=True)
-        return sha1(canonical_form).hexdigest()
+        return sha1(canonical_form.encode('utf-8')).hexdigest()
 
 
 class Criterion(models.Model):
@@ -510,7 +511,7 @@ class Assessment(models.Model):
 
         """
         median_scores = {}
-        for criterion, criterion_scores in scores_dict.iteritems():
+        for criterion, criterion_scores in six.iteritems(scores_dict):
             criterion_score = Assessment.get_median_score(criterion_scores)
             median_scores[criterion] = criterion_score
         return median_scores
@@ -673,7 +674,7 @@ class AssessmentPart(models.Model):
 
         # Validate that we have selections for all criteria
         # This will raise an exception if we're missing any selections/feedback required for criteria
-        cls._check_all_criteria_assessed(rubric_index, selected.keys(), feedback.keys())
+        cls._check_all_criteria_assessed(rubric_index, list(selected.keys()), list(feedback.keys()))
 
         # Retrieve the criteria/option/feedback for criteria that have options.
         # Since we're using the rubric's index, we'll get an `InvalidRubricSelection` error
@@ -684,13 +685,13 @@ class AssessmentPart(models.Model):
                 'option': rubric_index.find_option(criterion_name, option_name),
                 'feedback': feedback.get(criterion_name, u"")[0:cls.MAX_FEEDBACK_SIZE],
             }
-            for criterion_name, option_name in selected.iteritems()
+            for criterion_name, option_name in six.iteritems(selected)
         ]
 
         # Some criteria may have feedback but no options, only feedback.
         # For these, we set `option` to None, indicating that the assessment part
         # is not associated with any option, only a criterion.
-        for criterion_name, feedback_text in feedback.iteritems():
+        for criterion_name, feedback_text in six.iteritems(feedback):
             if criterion_name not in selected:
                 assessment_parts.append({
                     'criterion': rubric_index.find_criterion(criterion_name),
@@ -742,7 +743,7 @@ class AssessmentPart(models.Model):
                 'criterion': rubric_index.find_criterion(criterion_name),
                 'option': rubric_index.find_option_for_points(criterion_name, option_points),
             }
-            for criterion_name, option_points in selected.iteritems()
+            for criterion_name, option_points in six.iteritems(selected)
         ]
 
         # Add in feedback-only criteria

@@ -414,6 +414,7 @@ class GradeMixin(object):
 
         median_scores = peer_api.get_assessment_median_scores(submission_uuid)
         median_score = median_scores.get(criterion['name'], None)
+        median_score = -1 if median_score is None else median_score
 
         def median_options():
             """
@@ -427,7 +428,7 @@ class GradeMixin(object):
               5. Options A=1, B=3 and C=5, a median score of 6 returns [C]
                  Note: 5 should not happen as a median should never be out of range.
             """
-            last_score = None
+            last_score = -1
             median_options = []
 
             # Sort the options first by name and then by points, so that if there
@@ -440,7 +441,7 @@ class GradeMixin(object):
                 current_score = option['points']
 
                 # If we have reached a new score, then decide what to do next
-                if current_score is not last_score:
+                if current_score != last_score:
 
                     # If the last score we saw was already larger than the median
                     # score, then we must have collected enough so return all
@@ -476,7 +477,7 @@ class GradeMixin(object):
             return options[0]
         return {
             'label': u' / '.join([option['label'] for option in options]),
-            'points': median_score,
+            'points': median_score if median_score != -1 else None,
             'explanation': None,
         }
 

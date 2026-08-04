@@ -1,5 +1,7 @@
 """An XBlock where students can read a question and compose their response"""
 
+from __future__ import absolute_import
+
 import copy
 import datetime as dt
 import json
@@ -9,6 +11,7 @@ import os
 from lazy import lazy
 import pkg_resources
 import pytz
+from six import text_type
 from webob import Response
 from xblock.core import XBlock
 from xblock.fields import Boolean, Integer, List, Scope, String
@@ -362,7 +365,7 @@ class OpenAssessmentBlock(MessageMixin,
             if self.scope_ids.user_id is None:
                 student_id = None
             else:
-                student_id = unicode(self.scope_ids.user_id)
+                student_id = text_type(self.scope_ids.user_id)
 
         student_item_dict = dict(
             student_id=student_id,
@@ -1104,7 +1107,7 @@ class OpenAssessmentBlock(MessageMixin,
         if hasattr(key, 'to_deprecated_string'):
             return key.to_deprecated_string()
         else:
-            return unicode(key)
+            return text_type(key)
 
     def get_username(self, anonymous_user_id):
         """

@@ -6,6 +6,7 @@ import copy
 from functools import wraps
 import logging
 
+import six
 from xblock.core import XBlock
 
 from openassessment.assessment.errors import PeerAssessmentInternalError
@@ -485,6 +486,6 @@ class StaffAreaMixin(object):
                 AssessmentWorkflowError,
                 AssessmentWorkflowInternalError
         ) as ex:
-            msg = ex.message
+            msg = six.text_type(ex)
             logger.exception(msg)
             return {"success": False, 'msg': msg}

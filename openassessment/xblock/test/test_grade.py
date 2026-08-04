@@ -6,6 +6,7 @@ import copy
 import json
 
 import ddt
+import six
 
 from openassessment.assessment.api import peer as peer_api
 
@@ -37,18 +38,18 @@ class TestGrade(XBlockHandlerTestCase, SubmitAssessmentsMixin):
         # This isn't strictly speaking part of the grade step rendering,
         # but we've already done all the setup to get to this point in the flow,
         # so we might as well verify it here.
-        resp = self.request(xblock, 'render_submission', json.dumps(dict()))
+        resp = self.request(xblock, 'render_submission', json.dumps(dict())).decode('utf-8')
         self.assertIn('response', resp.lower())
         self.assertIn('complete', resp.lower())
 
         # Verify that student submission is in the view
-        self.assertIn(self.SUBMISSION[1], resp.decode('utf-8'))
+        self.assertIn(self.SUBMISSION[1], resp)
 
-        resp = self.request(xblock, 'render_peer_assessment', json.dumps(dict()))
+        resp = self.request(xblock, 'render_peer_assessment', json.dumps(dict())).decode('utf-8')
         self.assertIn('peer', resp.lower())
         self.assertIn('complete', resp.lower())
 
-        resp = self.request(xblock, 'render_self_assessment', json.dumps(dict()))
+        resp = self.request(xblock, 'render_self_assessment', json.dumps(dict())).decode('utf-8')
         self.assertIn('self', resp.lower())
         self.assertIn('complete', resp.lower())
 
@@ -69,15 +70,15 @@ class TestGrade(XBlockHandlerTestCase, SubmitAssessmentsMixin):
         # This isn't strictly speaking part of the grade step rendering,
         # but we've already done all the setup to get to this point in the flow,
         # so we might as well verify it here.
-        resp = self.request(xblock, 'render_submission', json.dumps(dict()))
+        resp = self.request(xblock, 'render_submission', json.dumps(dict())).decode('utf-8')
         self.assertIn('response', resp.lower())
         self.assertIn('complete', resp.lower())
 
-        resp = self.request(xblock, 'render_peer_assessment', json.dumps(dict()))
+        resp = self.request(xblock, 'render_peer_assessment', json.dumps(dict())).decode('utf-8')
         self.assertNotIn('peer', resp.lower())
         self.assertNotIn('complete', resp.lower())
 
-        resp = self.request(xblock, 'render_self_assessment', json.dumps(dict()))
+        resp = self.request(xblock, 'render_self_assessment', json.dumps(dict())).decode('utf-8')
         self.assertIn('self', resp.lower())
         self.assertIn('complete', resp.lower())
 
@@ -103,12 +104,12 @@ class TestGrade(XBlockHandlerTestCase, SubmitAssessmentsMixin):
         )
 
         # Render the grade section
-        resp = self.request(xblock, 'render_grade', json.dumps(dict()))
+        resp = self.request(xblock, 'render_grade', json.dumps(dict())).decode('utf-8')
         self.assertIn('your response', resp.lower())
 
         # Verify that feedback from each scorer appears in the view
-        self.assertIn(u'єאςєɭɭєภՇ ฬ๏гк!', resp.decode('utf-8'))
-        self.assertIn(u'Good job!', resp.decode('utf-8'))
+        self.assertIn(u'єאςєɭɭєภՇ ฬ๏гк!', resp)
+        self.assertIn(u'Good job!', resp)
 
     @scenario('data/feedback_per_criterion.xml', user_id='Bernard')
     def test_render_grade_feedback(self, xblock):
@@ -251,7 +252,7 @@ class TestGrade(XBlockHandlerTestCase, SubmitAssessmentsMixin):
 
         # Create all but the last peer assessment of the current user; no peer grade will be available
         graded_by = xblock.get_assessment_module('peer-assessment')['must_be_graded_by']
-        for scorer_sub, scorer_name, assessment in zip(scorer_subs, self.PEERS, PEER_ASSESSMENTS)[:-1]:
+        for scorer_sub, scorer_name, assessment in list(zip(scorer_subs, self.PEERS, PEER_ASSESSMENTS))[:-1]:
             self.create_peer_assessment(
                 scorer_sub,
                 scorer_name,
@@ -336,7 +337,7 @@ class TestGrade(XBlockHandlerTestCase, SubmitAssessmentsMixin):
         # (since it's not part of the original assessment),
         # but at least it won't display an error.
         resp = self.request(xblock, 'render_grade', json.dumps({}))
-        self.assertGreater(resp, 0)
+        self.assertGreater(len(resp), 0)
 
     @ddt.file_data('data/waiting_scenarios.json')
     @scenario('data/grade_waiting_scenario.xml', user_id='Omar')
@@ -405,7 +406,8 @@ class TestGrade(XBlockHandlerTestCase, SubmitAssessmentsMixin):
         feedback = peer_api.get_assessment_feedback(xblock.submission_uuid)
         self.assertIsNot(feedback, None)
         self.assertEqual(feedback['feedback_text'], u'I disliked my assessment')
-        self.assertItemsEqual(
+        six.assertCountEqual(
+            self,
             feedback['options'], [{'text': u'Option 1'}, {'text': u'Option 2'}]
         )
 
@@ -427,7 +429,7 @@ class TestGrade(XBlockHandlerTestCase, SubmitAssessmentsMixin):
         # Verify that the feedback was created in the database
         feedback = peer_api.get_assessment_feedback(xblock.submission_uuid)
         self.assertIsNot(feedback, None)
-        self.assertItemsEqual(feedback['options'], [])
+        six.assertCountEqual(self, feedback['options'], [])
 
     @scenario('data/grade_scenario.xml', user_id='Bob')
     def test_submit_feedback_invalid_options(self, xblock):

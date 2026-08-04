@@ -6,6 +6,7 @@ import copy
 import json
 
 import mock
+import six
 
 from openassessment.assessment.api import staff as staff_api
 
@@ -20,7 +21,7 @@ class StaffAssessmentTestBase(XBlockHandlerTestCase, SubmitAssessmentsMixin):
         path, context = xblock.staff_path_and_context()
 
         self.assertEqual('openassessmentblock/staff/oa_staff_grade.html', path)
-        self.assertItemsEqual(expected_context, context)
+        six.assertCountEqual(self, expected_context, context)
 
         # Verify that we render without error
         resp = self.request(xblock, 'render_staff_assessment', json.dumps({}))
@@ -161,7 +162,7 @@ class TestStaffAssessment(StaffAssessmentTestBase):
         self.assertEqual(assessment['score_type'], 'ST')
         self.assertEqual(assessment['feedback'], u'Staff: good job!')
 
-        parts = sorted(assessment['parts'])
+        parts = sorted(assessment['parts'], key=lambda part: part['option']['name'])
         self.assertEqual(len(parts), 2)
         self.assertEqual(parts[0]['option']['criterion']['name'], u'Form')
         self.assertEqual(parts[0]['option']['name'], 'Fair')
@@ -201,7 +202,7 @@ class TestStaffAssessment(StaffAssessmentTestBase):
         student_item = xblock.get_student_item_dict()
         xblock.create_submission(student_item, self.SUBMISSION)
         resp = self.request(xblock, 'staff_assess', json.dumps(STAFF_GOOD_ASSESSMENT))
-        self.assertIn("You do not have permission", resp)
+        self.assertIn("You do not have permission", resp.decode('utf-8'))
 
     @scenario('data/self_assessment_scenario.xml', user_id='Bob')
     def test_invalid_options(self, xblock):
