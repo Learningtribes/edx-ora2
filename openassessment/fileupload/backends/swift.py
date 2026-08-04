@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 '''
 Add in /edx/app/edxapp/edx-platform/lms/envs/aws.py:
 ORA2_SWIFT_URL = AUTH_TOKENS["ORA2_SWIFT_URL"]
@@ -11,10 +12,12 @@ ORA2_SWIFT_KEY should correspond to Meta Temp-Url-Key configure in swift. Run
 'swift stat -v' to get it.
 '''
 
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import logging
-import urlparse
 
 import requests
+from six.moves.urllib.parse import urlparse
 import swiftclient
 
 from django.conf import settings
@@ -96,5 +99,5 @@ def get_settings():
 
     url = getattr(settings, 'ORA2_SWIFT_URL', None)
     key = getattr(settings, 'ORA2_SWIFT_KEY', None)
-    url = urlparse.urlparse(url)
+    url = urlparse(url)
     return key, url

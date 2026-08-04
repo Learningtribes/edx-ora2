@@ -3,7 +3,11 @@ The mixin with handlers for the course ora blocks listing view.
 
 """
 
+from __future__ import absolute_import
+
 import json
+
+import six
 
 from webob import Response
 from xblock.core import XBlock
@@ -26,5 +30,5 @@ class CourseItemsListingMixin(object):
         """
         # Import is placed here to avoid model import at project startup.
         from openassessment.data import OraAggregateData
-        responses = OraAggregateData.collect_ora2_responses(unicode(self.course_id))
+        responses = OraAggregateData.collect_ora2_responses(six.text_type(self.course_id))
         return Response(json.dumps(responses), content_type='application/json')

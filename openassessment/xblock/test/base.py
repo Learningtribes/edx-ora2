@@ -2,12 +2,15 @@
 """
 Base class for handler-level testing of the XBlock.
 """
+from __future__ import absolute_import, print_function
+
 import copy
 from functools import wraps
 import json
 import os.path
 
 import mock
+from six.moves import zip
 import webob
 from workbench.runtime import WorkbenchRuntime
 
@@ -102,7 +105,7 @@ def scenario(scenario_path, user_id=None):
                 if isinstance(self, XBlockHandlerTestCaseMixin):
 
                     # Print a debug message
-                    print "Loading scenario from {path}".format(path=scenario_path)
+                    print("Loading scenario from {path}".format(path=scenario_path))
 
                     # Configure the runtime with our user id
                     self.set_user(user_id)
@@ -185,7 +188,7 @@ class XBlockHandlerTestCaseMixin(object):
         # Create a fake request
         request = webob.Request(dict())
         request.method = request_method
-        request.body = content
+        request.body = content.encode('utf-8')
 
         # Send the request to the XBlock handler
         if use_runtime:

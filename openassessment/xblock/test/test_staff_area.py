@@ -4,9 +4,9 @@ Tests for the staff area.
 """
 from collections import namedtuple
 import json
-import urllib
 
 from mock import MagicMock, Mock, call, patch
+from six.moves.urllib.parse import urlencode
 
 from openassessment.assessment.api import peer as peer_api
 from openassessment.assessment.api import self as self_api
@@ -169,7 +169,7 @@ class TestCourseStaff(XBlockHandlerTestCase):
         request.params = {"student_id": "test_student"}
         # Verify that we can render without error
         resp = xblock.render_student_info(request)
-        self.assertIn("a response was not found for this learner.", resp.body.lower())
+        self.assertIn("a response was not found for this learner.", resp.body.decode('utf-8').lower())
 
     @scenario('data/peer_only_scenario.xml', user_id='Bob')
     def test_staff_area_student_info_peer_only(self, xblock):
@@ -277,8 +277,8 @@ class TestCourseStaff(XBlockHandlerTestCase):
             self.request(
                 xblock,
                 "render_student_info",
-                urllib.urlencode({"student_username": "Bob"})
-            )
+                urlencode({"student_username": "Bob"})
+            ).decode('utf-8')
         )
 
     @scenario('data/staff_grade_scenario.xml', user_id='Bob')
@@ -415,8 +415,8 @@ class TestCourseStaff(XBlockHandlerTestCase):
             self.assertEquals('image', context['file_upload_type'])
 
             # Check the fully rendered template
-            payload = urllib.urlencode({"student_username": "Bob"})
-            resp = self.request(xblock, "render_student_info", payload)
+            payload = urlencode({"student_username": "Bob"})
+            resp = self.request(xblock, "render_student_info", payload).decode('utf-8')
             self.assertIn("http://www.example.com/image.jpeg", resp)
 
     @scenario('data/self_only_scenario.xml', user_id='Bob')
@@ -465,8 +465,8 @@ class TestCourseStaff(XBlockHandlerTestCase):
             self.assertEquals('image', context['file_upload_type'])
 
             # Check the fully rendered template
-            payload = urllib.urlencode({"student_username": "Bob"})
-            resp = self.request(xblock, "render_student_info", payload)
+            payload = urlencode({"student_username": "Bob"})
+            resp = self.request(xblock, "render_student_info", payload).decode('utf-8')
             for i in range(3):
                 self.assertIn("http://www.example.com/image%d.jpeg" % i, resp)
                 self.assertIn("test_description%d" % i, resp)
@@ -498,8 +498,8 @@ class TestCourseStaff(XBlockHandlerTestCase):
             self.assertNotIn('file_url', context['submission'])
 
             # Check the fully rendered template
-            payload = urllib.urlencode({"student_username": "Bob"})
-            resp = self.request(xblock, "render_student_info", payload)
+            payload = urlencode({"student_username": "Bob"})
+            resp = self.request(xblock, "render_student_info", payload).decode('utf-8')
             self.assertIn("Bob Answer", resp)
 
     @scenario('data/grade_scenario.xml', user_id='Bob')
@@ -559,7 +559,7 @@ class TestCourseStaff(XBlockHandlerTestCase):
         request.params = {"student_username": "Bob"}
         # Verify that we can render without error
         resp = xblock.render_student_info(request)
-        self.assertIn("bob answer", resp.body.lower())
+        self.assertIn("bob answer", resp.body.decode('utf-8').lower())
 
     @scenario('data/basic_scenario.xml', user_id='Bob')
     def test_cancel_submission_without_reason(self, xblock):
@@ -711,14 +711,14 @@ class TestCourseStaff(XBlockHandlerTestCase):
         request.params = {"student_username": 'Bob'}
         # Verify that we can see the student's grade
         resp = xblock.render_student_info(request)
-        self.assertIn("final grade", resp.body.lower())
+        self.assertIn("final grade", resp.body.decode('utf-8').lower())
 
         # Staff user Bob can clear his own submission
         xblock.clear_student_state('Bob', 'test_course', xblock.scope_ids.usage_id, bob_item['student_id'])
 
         # Verify that the submission was cleared
         resp = xblock.render_student_info(request)
-        self.assertIn("response was not found", resp.body.lower())
+        self.assertIn("response was not found", resp.body.decode('utf-8').lower())
 
     def _verify_staff_assessment_context(self, context, required, ungraded=None, in_progress=None):
         """

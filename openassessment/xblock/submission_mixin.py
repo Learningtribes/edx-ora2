@@ -1,16 +1,20 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import json
 import logging
 
+import six
 from xblock.core import XBlock
 
-from data_conversion import create_submission_dict, prepare_submission_for_serialization
 from openassessment.fileupload import api as file_upload_api
 from openassessment.fileupload.exceptions import FileUploadError
 from openassessment.workflow.errors import AssessmentWorkflowError
-from validation import validate_submission
 
+from .data_conversion import create_submission_dict, prepare_submission_for_serialization
 from .resolve_dates import DISTANT_FUTURE
 from .user_data import get_user_preferences
+from .validation import validate_submission
 
 logger = logging.getLogger(__name__)
 
@@ -208,7 +212,10 @@ class SubmissionMixin(object):
         if 'descriptions' in data:
             descriptions = data['descriptions']
 
-            if isinstance(descriptions, list) and all(map(lambda description: isinstance(description, basestring), descriptions)):
+            if (
+                    isinstance(descriptions, list) and
+                    all(isinstance(description, six.string_types) for description in descriptions)
+            ):
                 try:
                     self.saved_files_descriptions = json.dumps(descriptions)
 

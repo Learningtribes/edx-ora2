@@ -4,6 +4,8 @@ Public interface for the Assessment Workflow.
 """
 import logging
 
+import six
+
 from django.db import DatabaseError
 
 from openassessment.assessment.errors import PeerAssessmentError, PeerAssessmentInternalError
@@ -340,7 +342,7 @@ def _get_workflow_model(submission_uuid):
             problem.
 
     """
-    if not isinstance(submission_uuid, basestring):
+    if not isinstance(submission_uuid, six.string_types):
         raise AssessmentWorkflowRequestError("submission_uuid must be a string type")
 
     try:

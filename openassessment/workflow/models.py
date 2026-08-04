@@ -58,7 +58,7 @@ class AssessmentWorkflow(TimeStampedModel, StatusModel):
     an after the fact recording of the last known state of that information so
     we can search easily.
     """
-    STEPS = ASSESSMENT_API_DICT.keys()
+    STEPS = list(ASSESSMENT_API_DICT.keys())
 
     STATUSES = [
         "waiting",  # User has done all necessary assessment but hasn't been
